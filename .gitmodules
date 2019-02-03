@@ -1,0 +1,3 @@
+[submodule "apsw"]
+	path = apsw
+	url = https://github.com/rogerbinns/apsw.git

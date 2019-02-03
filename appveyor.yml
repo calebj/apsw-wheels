@@ -1,0 +1,29 @@
+environment:
+  PYTHON: "C:\\Python37-x64"
+
+install:
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - git submodule update --init --recursive
+  - pip install -U setuptools twine wheel cibuildwheel
+
+before_build:
+  - cd "%APPVEYOR_BUILD_FOLDER%\\apsw"
+  - ps: (cat setup.py) | %{$_ -replace 'name="apsw"','name="apsw_wheels"'} | set-content setup.py
+  - ps: (cat setup.py) | %{$_ -replace 'build_enable_all_extensions=False','build_enable_all_extensions=True'} | set-content setup.py
+  - "%PYTHON%\\python setup.py fetch --all"
+  - ps: (cat src\apswversion.h) | %{$_ -replace '-r1','-r2'} | set-content src\apswversion.h
+
+build_script:
+  - cd "%APPVEYOR_BUILD_FOLDER%\\apsw"
+  - "%PYTHON%\\python setup.py build --enable-all-extensions"
+  - cibuildwheel --output-dir wheelhouse
+
+artifacts:
+  - path: "apsw\\wheelhouse\\*.whl"
+    name: Wheels
+
+deploy_script:
+  - ps: |
+      If ($env:APPVEYOR_REPO_TAG -eq "true") {
+          & twine upload --skip-existing wheelhouse/*.whl
+      }
