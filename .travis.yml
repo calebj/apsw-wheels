@@ -13,14 +13,14 @@ matrix:
       language: generic
 
 install:
-  - pip3 install -U setuptools twine wheel git+https://github.com/YannickJadoul/cibuildwheel.git@pip-19-stalling-workaround
+  - pip3 install -U setuptools twine wheel cibuildwheel
 
 script:
   - cd apsw
   - sed -i'' -e 's/name="apsw"/name="apsw_wheels"/' setup.py
   - sed -i'' -e 's/build_enable_all_extensions=False/build_enable_all_extensions=True/' setup.py
   - python3 setup.py fetch --all
-  - sed -i'' -e 's/-r1/-r2/' src/apswversion.h
+#  - sed -i'' -e 's/-r1/-r2/' src/apswversion.h
   - cibuildwheel --output-dir /tmp/wheelhouse
 
 deploy:
