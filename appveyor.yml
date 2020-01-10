@@ -11,7 +11,7 @@ before_build:
   - ps: (cat setup.py) | %{$_ -replace 'name="apsw"','name="apsw_wheels"'} | set-content setup.py
   - ps: (cat setup.py) | %{$_ -replace 'build_enable_all_extensions=False','build_enable_all_extensions=True'} | set-content setup.py
   - "%PYTHON%\\python setup.py fetch --all"
-#  - ps: (cat src\apswversion.h) | %{$_ -replace '-r1','-r2'} | set-content src\apswversion.h
+  - ps: (cat src\apswversion.h) | %{$_ -replace '-r1','-r2'} | set-content src\apswversion.h
 
 build_script:
   - cd "%APPVEYOR_BUILD_FOLDER%\\apsw"

@@ -20,12 +20,13 @@ script:
   - sed -i'' -e 's/name="apsw"/name="apsw_wheels"/' setup.py
   - sed -i'' -e 's/build_enable_all_extensions=False/build_enable_all_extensions=True/' setup.py
   - python3 setup.py fetch --all
-#  - sed -i'' -e 's/-r1/-r2/' src/apswversion.h
+  - sed -i'' -e 's/-r1/-r2/' src/apswversion.h
+  - python3 setup.py sdist
   - cibuildwheel --output-dir /tmp/wheelhouse
 
 deploy:
   provider: script
-  script: "twine upload --skip-existing /tmp/wheelhouse/*"
+  script: "twine upload --skip-existing /tmp/wheelhouse/* dist/*"
   skip_cleanup: true
   on:
     tags: true
