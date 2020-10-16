@@ -19,7 +19,7 @@ script:
   - cd apsw
   - sed -i'' -e 's/name="apsw"/name="apsw_wheels"/' setup.py
   - sed -i'' -e 's/build_enable_all_extensions=False/build_enable_all_extensions=True/' setup.py
-  - sed -i'' -e 's/-r1/-r3/' src/apswversion.h
+    #  - sed -i'' -e 's/-r1/-r3/' src/apswversion.h
   - python3 setup.py fetch --all sdist
   - cibuildwheel --output-dir /tmp/wheelhouse
 
