@@ -10,7 +10,9 @@ matrix:
       - docker
       env: CIBW_BEFORE_BUILD="rm -rf build/"
     - os: osx
-      language: generic
+      osx_image: xcode11.2
+      language: shell
+
 
 install:
   - pip3 install -U setuptools twine wheel cibuildwheel
