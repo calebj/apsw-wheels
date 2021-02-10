@@ -26,5 +26,5 @@ artifacts:
 deploy_script:
   - ps: |
       If ($env:APPVEYOR_REPO_TAG -eq "true") {
-          & %PYTHON%\\python twine upload --skip-existing wheelhouse/*.whl
+          & %PYTHON%\\python -m twine upload --skip-existing wheelhouse/*.whl
       }
