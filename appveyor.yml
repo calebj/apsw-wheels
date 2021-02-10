@@ -1,5 +1,6 @@
 environment:
   PYTHON: "C:\\Python38-x64"
+  CIBW_SKIP: pp*
 
 install:
   - cd %APPVEYOR_BUILD_FOLDER%
