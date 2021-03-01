@@ -9,6 +9,9 @@ matrix:
       services:
       - docker
       env: CIBW_BEFORE_BUILD="rm -rf build/"
+      arch:
+      - amd64
+      - arm64
     - os: osx
       osx_image: xcode11.2
       language: shell
