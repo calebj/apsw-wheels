@@ -9,6 +9,14 @@ matrix:
       services:
       - docker
       env: CIBW_BEFORE_BUILD="rm -rf build/"
+    - os: linux
+      dist: xenial
+      sudo: required
+      python: 3.8
+      services:
+      - docker
+      env: CIBW_BEFORE_BUILD="rm -rf build/"
+      arch: arm64
     - os: osx
       osx_image: xcode11.2
       language: shell
