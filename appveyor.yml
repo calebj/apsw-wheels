@@ -1,6 +1,8 @@
 environment:
   PYTHON: "C:\\Python38-x64"
   CIBW_SKIP: pp*
+  CIBW_BUILD_FRONTEND: pip
+  CIBW_TEST_COMMAND: "python {package}\\tests.py"
 
 install:
   - cd %APPVEYOR_BUILD_FOLDER%
@@ -10,7 +12,7 @@ install:
 before_build:
   - cd "%APPVEYOR_BUILD_FOLDER%\\apsw"
   - ps: (cat setup.py) | %{$_ -replace 'name="apsw"','name="apsw_wheels"'} | set-content setup.py
-  - ps: (cat setup.py) | %{$_ -replace 'build_enable_all_extensions=False','build_enable_all_extensions=True'} | set-content setup.py
+  - ps: (cat setup.py) | %{$_ -replace 'build_enable_all_extensions = False','build_enable_all_extensions = True'} | set-content setup.py
   - "%PYTHON%\\python setup.py fetch --all"
 #  - ps: (cat src\apswversion.h) | %{$_ -replace '-r1','-r2'} | set-content src\apswversion.h
 

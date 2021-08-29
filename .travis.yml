@@ -1,17 +1,20 @@
 language: python
+env:
+  global:
+    - CIBW_SKIP="pp*"
+    - CIBW_BUILD_FRONTEND=pip
+    - CIBW_TEST_COMMAND="python3 {package}/tests.py"
 
 matrix:
   include:
     - os: linux
       dist: xenial
-      sudo: required
       python: 3.8
       services:
       - docker
       env: CIBW_BEFORE_BUILD="rm -rf build/"
     - os: linux
       dist: xenial
-      sudo: required
       python: 3.8
       services:
       - docker
@@ -21,14 +24,13 @@ matrix:
       osx_image: xcode11.2
       language: shell
 
-
 install:
   - pip3 install -U setuptools twine wheel cibuildwheel
 
 script:
   - cd apsw
   - sed -i'' -e 's/name="apsw"/name="apsw_wheels"/' setup.py
-  - sed -i'' -e 's/build_enable_all_extensions=False/build_enable_all_extensions=True/' setup.py
+  - sed -i'' -e 's/build_enable_all_extensions = False/build_enable_all_extensions = True/' setup.py
 #  - sed -i'' -e 's/-r1/-r2/' src/apswversion.h
   - python3 setup.py fetch --all sdist
   - cibuildwheel --output-dir /tmp/wheelhouse
